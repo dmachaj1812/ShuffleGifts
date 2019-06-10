@@ -1,0 +1,43 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar>{{toolbarMessage}}</mat-toolbar>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a *ngIf="this.authService.loggedIn()" (click)="drawer.toggle()" mat-list-item
+        [routerLink]="['/AttendingEvents']">Attending Events</a>
+      <a *ngIf="this.authService.loggedIn()" (click)="drawer.toggle()" mat-list-item
+        [routerLink]="['/HostingEvents']">Hosting Events</a>
+      <a *ngIf="this.authService.loggedIn()" (click)="drawer.toggle()" mat-list-item
+        [routerLink]="['/MyWishList']">MyWish List</a>
+      <a *ngIf="this.authService.loggedIn()" (click)="logoutSideBar(drawer)" mat-list-item>Logout</a>
+      <a *ngIf="!this.authService.loggedIn()" (click)="drawer.toggle()" [routerLink]="['/login']"
+        mat-list-item>Login</a>
+      <a *ngIf="!this.authService.loggedIn()" (click)="drawer.toggle()" [routerLink]="['/register-new-user']"
+        mat-list-item>Register</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <h3 [routerLink]="['/']">Shuffle Gifts</h3>
+
+      <a *ngIf="this.authService.loggedIn() && !(isHandset$ | async)" [routerLink]="['/AttendingEvents']">Attending
+        Events</a>
+      <a *ngIf="this.authService.loggedIn() && !(isHandset$ | async)" [routerLink]="['/HostingEvents']">Hosting
+        Events</a>
+      <a *ngIf="this.authService.loggedIn() && !(isHandset$ | async)" [routerLink]="['/MyWishList']">MyWish List</a>
+      <span class="spacer"></span>
+      <a *ngIf="this.authService.loggedIn() && !(isHandset$ | async)" (click)="logout()">Logout</a>
+      <a *ngIf="!this.authService.loggedIn() && !(isHandset$ | async)" [routerLink]="['/login']">Login</a>
+      <a *ngIf="!this.authService.loggedIn() && !(isHandset$ | async)"
+        [routerLink]="['/register-new-user']">Register</a>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

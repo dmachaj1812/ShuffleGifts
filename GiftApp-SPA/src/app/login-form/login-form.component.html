@@ -1,0 +1,52 @@
+<div *ngIf = "loginForm" class="container">
+  <form [formGroup]='rForm' (ngSubmit)="userLogin(rForm.value)">
+    <mat-grid-list cols="6" rowHeight="150px">
+      <mat-grid-tile colspan="6">
+        <mat-form-field hideRequiredMarker>
+          <input matInput placeholder="Email" name="email" formControlName = "email" />
+          <mat-error
+            *ngIf="rForm.get('email').hasError('required') && (rForm.controls['email'].touched || rForm.controls['email'].dirty)">
+            Email is required.</mat-error>
+          <mat-error *ngIf="rForm.get('email').hasError('email')">
+            You must enter a valid email.</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="6">
+        <mat-form-field hideRequiredMarker>
+          <input type="password" matInput formControlName="password" placeholder="Password" name="userPassword" />
+          <mat-error
+            *ngIf="!rForm.controls['password'].valid && (rForm.controls['password'].touched || rForm.controls['password'].dirty)">
+            Password is required.</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="6">
+        <button mat-button color="primary" [disabled]="rForm.invalid" type="submit">Login</button>
+        <button *ngIf="resetPassButton" mat-button color="primary" (click) = "openPasswordResetForm()" type="button">Reset Password</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+
+<div *ngIf = "resetPasswordForm" class="container">
+    <form [formGroup]='resetPassForm' (ngSubmit)="passwordReset(resetPassForm.value)">
+      <mat-grid-list cols="2" rowHeight="150px">
+        <mat-grid-tile  colspan="2">
+            <mat-form-field class = "fullWidth" hideRequiredMarker>
+                <input matInput placeholder="Email Associated with your Account" name="userEmail" formControlName=email />
+                <mat-error
+                  *ngIf="rForm.get('email').hasError('required') && (rForm.controls['email'].touched || rForm.controls['email'].dirty)">
+                  Email is required.</mat-error>
+                <mat-error *ngIf="rForm.get('email').hasError('email')">
+                  You must enter a valid email.</mat-error>
+              </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile  colspan="2">
+              <button mat-button color="primary" [disabled]="rForm.invalid">Reset Password</button>
+            </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </div>
+
+<div  class = "container" *ngIf="ressetPasswordFormSucces">
+ <p>If there is an email associated with that email, you will receive an email with password reset token that is valid 12 hours.</p>
+</div>

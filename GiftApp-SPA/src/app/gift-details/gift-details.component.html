@@ -1,0 +1,95 @@
+<div class="container">
+  <h1>Gift Details</h1>
+    <form class="form" #f="ngForm">
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <input
+            [disabled]="editModeOff"
+            #giftName="ngModel"
+            required
+            ngModel
+            name="giftName"
+            matInput
+            placeholder="Gift Name"
+            [(ngModel)] = "this.gift.giftName"
+          />
+          <mat-error
+            *ngIf="
+              giftName?.errors?.required && (giftName.touched || giftName.dirty)
+            "
+            >Gift name is required.</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <input
+            [disabled]="editModeOff"
+            #giftUrl="ngModel"
+            required
+            pattern="https?://.+"
+            ngModel
+            name="giftUrl"
+            matInput
+            placeholder="Link"
+            type="url"
+            [(ngModel)] = "this.gift.giftUrl"
+          />
+          <mat-error
+            *ngIf="
+            giftUrl?.errors?.required && (giftUrl.touched || giftUrl.dirty)
+            "
+            >Link is required.</mat-error
+          >
+          <mat-error
+            *ngIf="
+            giftUrl?.errors?.pattern && (giftUrl.touched || giftUrl.dirty)
+            "
+            >Please enter valid URL. For example:
+            http://www.shufflegifts.com</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <span matPrefix>$ &nbsp;</span>
+          <input
+            [disabled]="editModeOff"
+            #price="ngModel"
+            ngModel
+            name="price"
+            matInput
+            pattern="^\d*(\.\d{0,2})?$"
+            required
+            placeholder="Price"
+            [(ngModel)] = "this.gift.price"
+          />
+          <mat-error
+            *ngIf="
+              price?.errors?.required && (price.touched || price.dirty)
+            "
+            >Price is required.</mat-error
+          >
+          <mat-error
+            *ngIf="
+              price?.errors?.pattern && (price.touched || price.dirty)
+            "
+            >Please enter valid price</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <input
+           [disabled]="editModeOff"
+            #giftDescription="ngModel"
+            ngModel
+            name="giftDescription"
+            matInput
+            placeholder="Gift Description"
+            [(ngModel)] = "this.gift.giftDescription"
+          />
+        </mat-form-field>
+        <div class="row">
+          <div class = "col-sm-6"><button mat-raised-button (click) = "close()"> CANCEL </button></div>
+          <div class = "col-sm-6">
+            <button *ngIf="!editModeOff" mat-raised-button (click) = "saveChanges()" [disabled]="f.invalid"> Save Changes </button>
+            <button *ngIf="editModeOff" mat-raised-button (click) = "editEnable()"> Edit </button>
+          </div>
+        </div>
+      </form>
+
+</div>

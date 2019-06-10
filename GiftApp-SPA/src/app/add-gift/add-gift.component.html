@@ -1,0 +1,161 @@
+<div class="container">
+  <h3>Add Gifts</h3>
+  <div class="row">
+    <mat-divider></mat-divider>
+
+    <div class="col-sm-6">
+      <mat-tab-group>
+        <mat-tab label="Create New">
+          <form class="form" #f="ngForm" (ngSubmit)="addGiftToList(f)">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input #giftName="ngModel" required ngModel name="giftName" matInput placeholder="Gift Name" />
+              <mat-error *ngIf="
+                      giftName?.errors?.required && (giftName.touched || giftName.dirty)
+                    ">Gift name is required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input #giftUrl="ngModel" required pattern="https?://.+" ngModel name="giftUrl" matInput
+                placeholder="Link" type="url" />
+              <mat-error *ngIf="
+                    giftUrl?.errors?.required && (giftUrl.touched || giftUrl.dirty)
+                    ">Link is required.</mat-error>
+              <mat-error *ngIf="
+                    giftUrl?.errors?.pattern && (giftUrl.touched || giftUrl.dirty)
+                    ">Please enter valid URL. For example:
+                http://www.shufflegifts.com</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <span matPrefix>$ &nbsp;</span>
+              <input #price="ngModel" ngModel name="price" matInput pattern="^\d*(\.\d{0,2})?$" required
+                placeholder="Price" />
+              <mat-error *ngIf="
+                      price?.errors?.required && (price.touched || price.dirty)
+                    ">Price is required.</mat-error>
+              <mat-error *ngIf="
+                      price?.errors?.pattern && (price.touched || price.dirty)
+                    ">Please enter valid price</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input #giftDescription="ngModel" ngModel name="giftDescription" matInput
+                placeholder="Gift Description" />
+            </mat-form-field>
+
+            <button [disabled]="f.invalid" id="add-to-list" mat-button>
+              Add to list
+            </button>
+          </form>
+
+        </mat-tab>
+        <mat-tab label="Wish List">
+          <div class="wishList">
+            <mat-list role="list">
+              <mat-list-item *ngFor="let gift of wishListGifts">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-1">
+                      <mat-icon mat-list-icon>card_giftcard</mat-icon>
+                    </div>
+                    <div class="col-sm-4">
+                      <h5 mat-line>{{gift?.giftName}}</h5>
+                      <p mat-line>{{gift.price | currency}}</p>
+                    </div>
+                    <div class="col-sm-6">
+                      <h5 mat-line>{{gift.giftDescription}}</h5>
+                    </div>
+                    <div class="col-sm-1">
+                      <mat-checkbox (change)="addGiftToListWishList(gift)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+
+
+    <div class="col-sm-6">
+      <h4>Gifts to Add</h4>
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="giftName">
+          <th mat-header-cell *matHeaderCellDef>Gift Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.giftName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="link">
+          <th mat-header-cell *matHeaderCellDef>Gift Url</th>
+          <td mat-cell *matCellDef="let element"><a href="{{ element.giftUrl}}"
+              target="blank">{{element.giftUrl | textCut}}</a></td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let element">{{ element.giftDescription }}</td>
+        </ng-container>
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="deleteGift(element)">
+              <i class="material-icons"> delete </i>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <button *ngIf="this.giftList.length >= 1" class="full-width" mat-button (click)="addAllToDB()">Add all to
+        {{eventName}}</button>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <table id = "wishListTable" mat-table [dataSource]="dataSourceMyWishList" class="mat-elevation-z8">
+
+
+    <ng-container matColumnDef="indexWishList">
+      <th mat-header-cell *matHeaderCellDef> # </th>
+      <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="giftNameWishList">
+      <th mat-header-cell *matHeaderCellDef> Gift Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.giftName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="giftUrlWishList">
+      <th mat-header-cell *matHeaderCellDef> Gift Url </th>
+      <td mat-cell *matCellDef="let element"><a href="{{element.giftUrl}}" target = "blank" >{{element.giftUrl | textCut}}</a> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priceWishList">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="giftDescriptionWishList">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.giftDescription | textCut}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="addToEventWishList">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element"> <button mat-button> Add</button>  </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsMyWishList"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsMyWishList;"></tr>
+  </table>  -->

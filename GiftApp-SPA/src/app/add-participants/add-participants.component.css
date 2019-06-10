@@ -1,0 +1,33 @@
+table{
+    width: 100%;
+    
+}
+h3{
+    text-align: center;
+}
+
+.full-width{
+    width: 80%;
+}
+
+.mat-elevation-z8 {
+    transition: none !important;
+    box-shadow: none !important;
+    
+}
+.material-icons{
+    cursor: pointer;
+}
+
+.flex-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.check-box{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+button{
+    width: 100%;
+}

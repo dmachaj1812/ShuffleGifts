@@ -1,0 +1,28 @@
+<div class="container">
+  <div *ngIf = "this.authService.decoded().userData === '0'"align="center"><h3>Jeszcze nikogo nie wylosowales!</h3>
+  </div>
+  <div *ngIf = "this.authService.decoded().userData != '0'">
+    <div >
+      <h3>Wylosowałeś: {{ giftFor?.userName}}</h3>
+      <h3>Lista prezentów: </h3>
+      <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nazwa Prezentu</th>
+              <th>Link do Prezentu</th>
+              <th>Specjalne Instrukcje</th>              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let gift of giftFor?.gifts; let i = index">
+              <th>{{i+1}}</th>
+              <th>{{ gift.giftName }}</th>
+              <th><a href="{{gift.giftUrl}}"> Prezent</a></th>
+              <th>{{ gift.giftDescription }}</th>             
+            </tr>
+          </tbody>
+        </table>      
+    </div>
+  </div>
+</div>

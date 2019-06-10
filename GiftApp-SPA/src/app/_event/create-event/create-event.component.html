@@ -1,0 +1,125 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <form #f="ngForm" (ngSubmit)="createEvent()">
+          <mat-form-field class="full-width" hideRequiredMarker>
+            <input matInput placeholder="Event Name" name="eventName" [(ngModel)]="eventToAdd.eventName" required
+              name="eventName" #eventName="ngModel" />
+            <mat-error *ngIf="eventName?.errors?.required">Event Name is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" hideRequiredMarker>
+            <input matInput placeholder="Event Place" [(ngModel)]="eventToAdd.eventPlace" name="eventPlace"
+              #eventPlace="ngModel" required />
+            <mat-error *ngIf="eventPlace?.errors?.required">Evemt Place is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" hideRequiredMarker>
+            <input matInput placeholder="Address" name="mailingAddress" [(ngModel)]="eventToAdd.mailingAddress"
+              #maillingAddress="ngModel" required />
+            <mat-error *ngIf="maillingAddress?.errors?.required">Address is required</mat-error>
+          </mat-form-field>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput placeholder="City" name="city" [(ngModel)]="eventToAdd.city" #city="ngModel" required />
+                <mat-error *ngIf="city?.errors?.required">City is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput placeholder="State" name="state" [(ngModel)]="eventToAdd.state" #state="ngModel"
+                  required />
+                <mat-error *ngIf="state?.errors?.required">State is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput type="number" placeholder="Zip Code" name="zipCode" [(ngModel)]="eventToAdd.zipCode"
+                  #zipCode="ngModel" required />
+                <mat-error *ngIf="zipCode?.errors?.required">Zip Code is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput [min]="minDate" [matDatepicker]="eventDatee" placeholder="Event Date" name="eventDatee"
+                  [(ngModel)]="eventDate" #eventDatee="ngModel" required />
+                <mat-datepicker-toggle matSuffix [for]="eventDatee"></mat-datepicker-toggle>
+                <mat-datepicker #eventDatee></mat-datepicker>
+                <mat-error *ngIf="eventDatee?.errors?.required">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput type="time" placeholder="Event Time" name="eventTimee" [(ngModel)]="eventTime"
+                  #eventTimee="ngModel" required />
+                <mat-error *ngIf="eventTimee?.errors?.required">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Add gifts by" name="addGiftsBy"
+                  [(ngModel)]="eventToAdd.giftsAddBy" #addGiftsBy="ngModel" required />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="addGiftsBy?.errors?.required">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <input matInput [min]="minDate" [matDatepicker]="pickerFor" placeholder="RSVP" name="RSVP"
+                  [(ngModel)]="eventToAdd.RSVP" #RSVP="ngModel" required />
+                <mat-datepicker-toggle matSuffix [for]="pickerFor"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFor></mat-datepicker>
+                <mat-error *ngIf="RSVP?.errors?.required">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <span matPrefix>$ &nbsp;</span>
+                <input type="number" min="0" matInput placeholder="Min Price" value="0" [(ngModel)]="eventToAdd.minPrice"
+                  name="minPrice" #minPrice="ngModel" required />
+                <mat-error *ngIf="minPrice?.errors?.required">Min Price is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="full-width" hideRequiredMarker>
+                <span matPrefix>$ &nbsp;</span>
+                <input type="number" min="{{ eventToAdd.minPrice }}" matInput placeholder="Max Price" value="1"
+                  [(ngModel)]="eventToAdd.maxPrice" name="maxPrice" #maxPrice="ngModel" required />
+                <mat-error *ngIf="maxPrice?.errors?.required">Max Price is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div *ngIf="gotData">
+            <div class="row" *ngIf="eventType === 'Christmas'">
+              <div class="col-sm-6" *ngFor="let eventOption of allEventOptions; let k = index">
+                <mat-form-field class="full-width" hideRequiredMarker>
+                  <mat-label>{{ eventOption[0].category }}</mat-label>
+                  <mat-select [(ngModel)]="eventOptionsToAddId[k]" (ngModelChange)="
+                      changeDescription(eventOptionsToAddId[k] - 1, k)
+                    " name="{{ eventOption[0].category }}">
+                    <mat-option *ngFor="let option of eventOption" value="{{ option.id }}">{{ option.name }}</mat-option>
+                  </mat-select>
+                  <mat-hint>{{ eventOptionsToAddDescription[k] }}</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <button class="full-width" [disabled]="f.invalid" mat-raised-button color="primary">
+            Create!
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>

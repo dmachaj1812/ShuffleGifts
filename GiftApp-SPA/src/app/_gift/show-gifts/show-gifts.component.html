@@ -1,0 +1,79 @@
+<div class="container">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+  </mat-form-field>
+
+  <div class="example-container mat-elevation-z8">
+    <div class="example-table-container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = index" class='center' data-label='No.'>{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="giftName">
+          <th mat-header-cell *matHeaderCellDef>Gift Name</th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Name'><span
+              class="row-data">{{ element.giftName }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Description'> <span
+              class="row-data">{{ element.giftDescription }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Price'> <span
+              class="row-data">{{ element.price | currency}}</span></td>
+        </ng-container>s
+
+        <ng-container matColumnDef="url">
+          <th mat-header-cell *matHeaderCellDef>URL</th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='URL'> <span class="row-data"><a
+                href="{{element.giftUrl}}" target="blank">{{ element.giftUrl  | textCut}}</a></span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button [disabled]="!showGiftData.canEdit" class="btn-option" mat-button (click)="giftDetails(element)"><i class="material-icons"> edit
+              </i></button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button [disabled]="!showGiftData.canEdit" class="btn-option" mat-button (click)="delete(element)"><i class="material-icons"> delete
+              </i></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+
+
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col-sm-6">
+      <button *ngIf="changeOccured" id="buttonChanges" mat-raised-button color="primary" (click)="saveChanges()">
+        SAVE CHANGES
+      </button>
+    </div>
+    <div class="col-sm-6">
+      <button *ngIf="changeOccured" id="buttonChanges" mat-stroked-button color="warn" (click)="undoChanges()">
+        UNDO CHANGE
+      </button>
+    </div>
+  </div>
+
+
+
+<p></p>
+</div>

@@ -1,0 +1,41 @@
+<div class="loaded">
+  <div id="header">
+    <h1>You have drew</h1>
+    <h3>{{giftShuffleData.giftForName}}</h3>
+  </div>
+
+  <div id="content">
+    <div id="contentHeader">
+      <h6>Gifts To Buy</h6>
+    </div>
+    <mat-divider></mat-divider>
+    <div id="list">
+      <ul>
+        <li class="listItem" *ngFor="let gift of giftShuffleData.listOfGiftsToBuy">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-3">
+                <h5>{{gift.giftName}}</h5>
+              </div>
+              <div class="col-sm-8 giftUrl">
+                <a href="{{gift.giftUrl}}" target="blank"> {{gift.giftUrl}}</a>
+              </div>
+              <div class="col-sm-1">
+                <h5>{{gift.price|currency}}</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 description">
+                <p>{{gift.giftDescription}}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+

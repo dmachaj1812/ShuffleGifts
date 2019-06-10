@@ -1,0 +1,29 @@
+<div class="container" *ngIf="loaded">
+  <mat-selection-list #allGifts [(ngModel)]="selectedIds">
+    <mat-list-option *ngFor="let gift of allWishlistGifts" [value]="gift.id" [disabled]="checkIfAlreadyAdded(gift.id)"
+      [selected]="checkIfAlreadyAdded(gift.id)">
+      <h3 mat-line>
+
+          <b>{{gift.giftName}}</b>
+
+
+
+          <a href="{{gift.giftUrl}}" target="blank"> {{gift.giftUrl }}</a>
+
+
+
+          <span class="priceSpan">{{gift.price | currency}}</span>
+
+      </h3>
+      <p mat-line> {{gift.giftDescription}}</p>
+    </mat-list-option>
+  </mat-selection-list>
+
+
+  <button *ngIf="allWishlistGifts.length > 0" mat-raised-button color="primary" (click)="addGifts()">ADD ALL TO
+    {{(eventName | uppercase) || 'EVENT'}}</button>
+  <div *ngIf="allWishlistGifts.length === 0">
+    <h2>You don`t have any Wish List Gifts</h2>
+    <button mat-raised-button color="primary" [routerLink]="['/MyWishList']">ADD SOME NOW!</button>
+  </div>
+</div>

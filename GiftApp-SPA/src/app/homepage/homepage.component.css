@@ -1,0 +1,15 @@
+#mainUpperPhoto{     
+    background-image: url("/assets/Home-Upper-Photo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 33%;
+}
+#mainEvents{
+    padding:10px;
+    height: 33%;
+}
+#bottom{
+    height: 33%;
+    background-color: brown;
+}

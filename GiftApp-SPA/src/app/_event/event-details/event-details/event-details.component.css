@@ -1,0 +1,18 @@
+#cardTitle{
+  text-align: center;
+}
+.cardSubtitle{
+  text-align: center;
+  font-size: 18px;
+
+}
+
+button{
+  width:100%;
+  text-align: center;
+}
+
+.container{
+  margin-top:10px;
+
+}

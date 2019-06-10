@@ -1,0 +1,100 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" [routerLink]="['/']">Shuffle Gifts</a>
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+
+
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="this.authService.loggedIn()" class="nav-item"><a class="nav-link"
+          [routerLink]="['/AttendingEvents']">Attending Events</a></li>
+      <li *ngIf="this.authService.loggedIn()" class="nav-item"><a class="nav-link"
+          [routerLink]="['/HostingEvents']">Hosting Events</a></li>
+      <li *ngIf="this.authService.loggedIn()" class="nav-item"><a class="nav-link" [routerLink]="['/MyWishList']">My
+          Wish List</a></li>
+      <li></li>
+    </ul>
+
+
+
+    <div>
+      <div *ngIf="!this.authService.loggedIn()">
+        <div class="row">
+          <div class="col-sm-6">
+            <button class="authBtn" mat-raised-button color="primary" [routerLink]="['/login']">Login</button>
+          </div>
+          <div class="col-sm-6">
+            <button class="authBtn" mat-raised-button [routerLink]="['/register-new-user']">
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="this.authService.loggedIn()">
+        <button mat-button> Welcome {{userName}}</button>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" [routerLink]="['/']">Shuffle Gifts</a>
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="this.authService.loggedIn()" class="nav-item"><a class="nav-link"
+          [routerLink]="['/AttendingEvents']">Attending Events</a></li>
+      <li *ngIf="this.authService.loggedIn()" class="nav-item"><a class="nav-link"
+          [routerLink]="['/HostingEvents']">Hosting Events</a></li>
+      <li *ngIf="this.authService.loggedIn()" class="nav-item"><a class="nav-link" [routerLink]="['/MyWishList']">My
+          Wish List</a></li>
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <div *ngIf="!this.authService.loggedIn()" id="login/register">
+        <button mat-raised-button color="primary" [routerLink]="['/login']">Login</button>
+        <button mat-raised-button [routerLink]="['/register-new-user']">
+          Sign Up
+        </button>
+      </div>
+      <div *ngIf="this.authService.loggedIn()" id="user">
+        <div class="btn-group" dropdown>
+          <button mat-raised-button color="primary" dropdownToggle aria-controls="dropdown-basic">
+            Welcome {{userName}}
+            <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem">
+              <a class="dropdown-item" href="#">Action</a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#">Another action</a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+ -->

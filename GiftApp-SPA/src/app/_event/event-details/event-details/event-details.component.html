@@ -1,0 +1,23 @@
+<div *ngIf="isLoaded" class="container">
+  <mat-card>
+    <mat-card-title><h2 id="cardTitle">{{this.currentEvent.eventName}}</h2></mat-card-title>
+    <mat-card-subtitle><p class="cardSubtitle">{{this.currentEvent.dateTimeOfEvent | date}}</p></mat-card-subtitle>
+    <mat-card-subtitle><p class="cardSubtitle">{{this.timeOfEvent}}</p></mat-card-subtitle>
+    <mat-card-subtitle><h3 class ="cardSubtitle">{{this.currentEvent.eventPlace}}</h3></mat-card-subtitle>
+    <mat-card-subtitle><h3 class ="cardSubtitle">{{this.currentEvent.mailingAddress}}</h3></mat-card-subtitle>
+    <mat-card-subtitle><h3 class ="cardSubtitle">{{this.currentEvent.city}} {{this.currentEvent.state}} {{this.currentEvent.zipCode}}</h3></mat-card-subtitle>
+    <mat-card-subtitle><button color="primary" mat-raised-button (click)="showOnGoogleMap()">SHOW ON GOOGLE MAP</button></mat-card-subtitle>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab *ngIf ="displayShuffled" label="Shuffled Gifts"><app-shuffled-gifts [eventId] = "eventId"></app-shuffled-gifts></mat-tab>
+        <mat-tab label="My Gifts"><app-my-gifts-list-event [eventGiftData] = "eventGiftData"></app-my-gifts-list-event></mat-tab>
+        <mat-tab label="Participants"><app-event-partcipants [eventId] = "eventId" [rsvp]="currentEvent.rsvp"></app-event-partcipants></mat-tab>
+        <mat-tab label="Chat"><app-event-chat [eventId] = "eventId"></app-event-chat></mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+
+</div>
+
+

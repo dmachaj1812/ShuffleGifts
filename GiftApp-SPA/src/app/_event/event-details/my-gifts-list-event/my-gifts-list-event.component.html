@@ -1,0 +1,51 @@
+<div *ngIf="isLoaded" class="container">
+  <div id="header">
+    <h3 *ngIf="canEdit" id="headerTitle">You have until {{eventGiftData.addGiftsBy | date}} to add your gifts!</h3>
+    <h3 *ngIf="!canEdit" id="headerTitle">Gifts have been shuffled! You can no longer edit your gifts for this event.
+    </h3>
+    <div *ngIf="canEdit">
+      <p *ngIf="howManyGiftsOption === 3" class="subHeader">You can add as many gifts as you want to and at the end
+        {{whoChooses}}</p>
+      <div *ngIf="howManyGiftsOption === 4">
+        <p class="subHeader">The total price of your gifts can not exceed
+          {{eventGiftData.maxPrice | currency}} </p>
+        <p class="subHeader">Your total for {{eventGiftData.eventName}} is: {{(totalPrice | currency)}}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+  <mat-divider></mat-divider>
+
+
+  <div *ngIf="canEdit" class="addGift">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Add gifts to {{eventGiftData.eventName}}
+          </mat-panel-title>
+          <mat-panel-description>
+            Create new gift or add from wishlist!
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-tab-group>
+          <mat-tab label="Create New Gift">
+            <app-create-gift [createGiftData]="createGiftData"></app-create-gift>
+          </mat-tab>
+          <mat-tab label="Wish List">
+            <app-add-gift-from-wishlist [eventId]="eventGiftData.eventId" [eventName]="eventGiftData.eventName">
+            </app-add-gift-from-wishlist>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <app-show-gifts [showGiftData]="showGiftData"></app-show-gifts>
+
+</div>

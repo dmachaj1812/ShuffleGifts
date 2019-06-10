@@ -1,0 +1,322 @@
+<div class="container">
+
+  <div class="row">
+    <div *ngIf="canAddParticipants" class="col-sm-2">
+      <button id="addPartBtn" mat-raised-button color="primary" [disabled]="canManageParticipants"
+        [routerLink]="['/AddParticipants', eventShowPartData.eventId]">ADD PARTICIPANTS</button>
+    </div>
+    <div class="col-sm-10">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <div class="example-container mat-elevation-z8">
+    <div class="example-table-container">
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element; let i = index" class='center' data-label='No.'>{{i+1}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name</th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Name'>
+            <span class="row-data">{{ element.user.userName }}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Email'>
+            <span class="row-data"> {{ element.user.email }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="giftNumber">
+          <th mat-header-cell *matHeaderCellDef> Gifts Added </th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Gifts Added'>
+            <span class="row-data"> {{ element.giftNumber }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="isConfirmed">
+          <th mat-header-cell *matHeaderCellDef> Confirmed </th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='Confirmed'>
+            <span class="row-data" *ngIf="element.isConfirmed === true"><i class="material-icons">
+                check_box
+              </i></span>
+            <span class="row-data" *ngIf="element.isConfirmed === false"><i class="material-icons">
+                check_box_outline_blank
+              </i></span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Role">
+          <th mat-header-cell *matHeaderCellDef> SemiAdmin
+            <i class="row-data" matTooltip="Will have control over participants of this event."
+              class="fa fa-question fa-lg" aria-hidden="true"></i>
+          </th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile' data-label='SemiAdmin'>
+            <span class="row-data" *ngIf="element.role.name === 'SemiAdmin'"><i class="material-icons">
+                check_box
+              </i>
+            </span>
+            <span class="row-data" *ngIf="element.role.name === 'User'"><i class="material-icons">
+                check_box_outline_blank
+              </i></span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class='has_label_on_mobile center cursor'>
+            <button mat-icon-button [disabled]="canManageParticipants || checkUserLogin(element.user.email) || element.role.name === 'Admin' "
+              (click)="delete(element)">
+              <i class="material-icons cursor"> delete </i>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <button mat-raised-button [routerLink]="['/AddParticipants', this.eventShowPartData.eventId]">
+        <i class="material-icons">
+          add
+          </i>Add Participants</button>
+    </div>
+    <div class="col-sm-8">
+      <mat-form-field>
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Search"
+          id="search"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i+1}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.user.userName }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.user.email }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="giftNumber">
+      <th mat-header-cell *matHeaderCellDef>Gifts Added</th>
+      <td mat-cell *matCellDef="let element">{{ element.giftNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isConfirmed">
+      <th mat-header-cell *matHeaderCellDef>Confirmed</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.isConfirmed === true"
+          ><i class="material-icons" >
+            check_box
+          </i></span
+        ><span *ngIf="element.isConfirmed === false"
+          ><i class="material-icons">
+            check_box_outline_blank
+          </i></span
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Role">
+      <th mat-header-cell *matHeaderCellDef>
+        SemiAdmin
+        <i
+          matTooltip="Will have control over participants of this event."
+          class="fa fa-question fa-lg"
+          aria-hidden="true"
+        ></i>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.role.name === 'SemiAdmin'"
+          ><i class="material-icons" >
+            check_box
+          </i></span
+        ><span *ngIf="element.role.name === 'User'"
+          ><i class="material-icons">
+            check_box_outline_blank
+          </i></span
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><i class="material-icons cursor" (click)= "edit(element)">
+        edit
+        </i></td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><i class="material-icons cursor" (click)="delete(element)"> delete </i></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+</div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+    <mat-grid-list cols="8" rowHeight="100px">
+      <mat-grid-tile colspan="2" rowspan="1">
+        <button mat-raised-button [routerLink]="['/AddParticipants', this.eventId]">
+          <i class="material-icons">
+            add
+            </i>Add Participants</button>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="6" rowspan="1">
+        <mat-form-field>
+          <input
+            matInput
+            (keyup)="applyFilter($event.target.value)"
+            placeholder="Search"
+            id="search"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element; let i = index">{{i+1}}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.userName }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.email }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="giftNumber">
+        <th mat-header-cell *matHeaderCellDef>Gifts Added</th>
+        <td mat-cell *matCellDef="let element">{{ element.giftNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isConfirmed">
+        <th mat-header-cell *matHeaderCellDef>Confirmed</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.isConfirmed === true"
+            ><i class="material-icons" >
+              check_box
+            </i></span
+          ><span *ngIf="element.isConfirmed === false"
+            ><i class="material-icons">
+              check_box_outline_blank
+            </i></span
+          >
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Role">
+        <th mat-header-cell *matHeaderCellDef>
+          SemiAdmin
+          <i
+            matTooltip="Will have control over participants of this event."
+            class="fa fa-question fa-lg"
+            aria-hidden="true"
+          ></i>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.role.name === 'SemiAdmin'"
+            ><i class="material-icons" >
+              check_box
+            </i></span
+          ><span *ngIf="element.role.name === 'User'"
+            ><i class="material-icons">
+              check_box_outline_blank
+            </i></span
+          >
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"><i class="material-icons cursor" (click)= "edit(element)">
+          edit
+          </i></td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"><i class="material-icons cursor" (click)="delete(element)"> delete </i></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div> -->

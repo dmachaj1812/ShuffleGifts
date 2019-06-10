@@ -1,0 +1,125 @@
+<div class="container">
+  <form [formGroup]= "newUserForm" (ngSubmit)="registerNewUser(newUserForm.value)">
+    <mat-grid-list cols="6" rowHeight="120px">
+      <mat-grid-tile colspan="6">
+        <mat-form-field hideRequiredMarker>
+          <input matInput required placeholder="Name" type="text" name="name" formControlName = "name"  />
+          <mat-error *ngIf="newUserForm.get('name').hasError('required') && (newUserForm.get('name').dirty||newUserForm.get('name').touched)" >Name is required.</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="6">
+        <mat-form-field hideRequiredMarker>
+          <input matInput required email placeholder="Email" type="email" name="name" formControlName = "email" />
+          <mat-error *ngIf="newUserForm.get('email').hasError('required') && (newUserForm.get('email').dirty||newUserForm.get('email').touched)">Email is required.</mat-error>
+          <mat-error *ngIf="newUserForm.get('email').hasError('email')">You must enter a valid email.</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="6">
+        <mat-form-field hideRequiredMarker>
+          <input matInput type="password" placeholder="Password" name="password" formControlName="password" />
+          <mat-error *ngIf="newUserForm.get('password').hasError('required') && (newUserForm.get('password').dirty||newUserForm.get('password').touched)">Password is required.</mat-error>
+          <mat-error *ngIf="newUserForm.get('password').hasError('minlength')"> Password must be at least 6 characters.</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="6">
+        <mat-form-field hideRequiredMarker>
+          <input matInput type="password" placeholder="Confirm Password" name="passwordConfirm" formControlName = "confirmPassword" />
+          <mat-error *ngIf="newUserForm.controls['confirmPassword'].errors?.MatchPassword" >Passwords do not match.</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="6">
+        <button [disabled]="newUserForm.invalid" type="submit" class="btn btn-primary">
+          Register
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+<!-- 
+<div class="form-group">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      placeholder="Name"
+      name="name"
+      required
+      ngModel
+      #name="ngModel"
+      [(ngModel)]="newUser.userName"
+    />
+    <div *ngIf="name.invalid && (name.dirty || name.touched)">
+      <div *ngIf="name?.errors.required">Name is required</div>
+    </div>
+  </div>
+<div class="form-group">
+<label for="email">Email address</label>
+<input
+  type="email"
+  class="form-control"
+  id="email"
+  placeholder="Enter email"
+  name="email"
+  required
+  email
+  ngModel
+  #email="ngModel"
+  [(ngModel)]="newUser.email"
+/>
+<div *ngIf="email.invalid && (email.dirty || email.touched)">
+  <div *ngIf="email?.errors.required">Email is required</div>
+  <div *ngIf="email?.errors.email">
+    Email must be a valid email address
+  </div>
+</div>
+</div>
+<div
+ngModelGroup="passwords"
+#passwords="ngModelGroup"
+appCheckPassword
+>
+<div class="form-group">
+  <label for="password">Password</label>
+  <input
+    type="password"
+    class="form-control"
+    id="password"
+    placeholder="Password"
+    name="password"
+    required
+    minlength="6"
+    ngModel
+    #password="ngModel"
+    [(ngModel)]="password1"
+  />
+</div>
+<div
+  *ngIf="password.invalid && (password.dirty || password.touched)"
+>
+  <div *ngIf="password?.errors.required">Password is required</div>
+  <div *ngIf="password?.errors.minlength">
+    Password must be at least 6 characters
+  </div>
+</div>
+<div class="form-group">
+  <label for="passwordConfirm">Confirm Password </label>
+  <input
+    type="password"
+    class="form-control"
+    id="passwordConfirm"
+    placeholder="Confirm Password"
+    name="passwordConfirm"
+    required
+    appPassMustMatch
+    ngModel
+    #passwordConfirm="ngModel"
+    [(ngModel)]="password2"
+  />
+</div>
+<div
+  *ngIf="passwords.errors?.passwordCheck && (passwordConfirm.dirty || passwordConfirm.touched)"
+>Passwords do not match</div>
+</div> -->

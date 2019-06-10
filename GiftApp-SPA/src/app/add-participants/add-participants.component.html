@@ -1,0 +1,104 @@
+<div *ngIf="isDataLoaded">
+    <div class="container">
+        <h3>Add Participants</h3>
+        <mat-divider></mat-divider>
+
+        <div class="row">
+          <div class = "col-sm-4">
+              <form #f="ngForm" (ngSubmit)="addToList(f)" class="form">
+                  <mat-form-field class="full-width" hideRequiredMarker>
+                    <input
+                      #name="ngModel"
+                      matInput
+                      placeholder="Name"
+                      name="name"
+                      [(ngModel)]="participants.name"
+                      required
+                    />
+                    <mat-error *ngIf="name?.errors?.required && (name.touched || name.dirty) ">Name is required.</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="full-width" hideRequiredMarker>
+                    <input
+                      #email = "ngModel"
+                      matInput
+                      placeholder="Email"
+                      id="email"
+                      name="email"
+                      [(ngModel)]="participants.email"
+                      required
+                      email
+                      appEmailRepeatCheck
+                      [emailList] = "this.emailList"
+
+                    />
+                    <mat-error *ngIf="email?.errors?.required && (email.touched || email.dirty) ">Email is required.</mat-error>
+                    <mat-error *ngIf="email?.errors?.email">You must enter a valid email.</mat-error>
+                    <mat-error *ngIf="email?.errors?.EmailRepeatCheck">This email is already added to {{eventName || 'this event'}}</mat-error>
+                  </mat-form-field>
+
+                  <div class="full-width check-box">
+                    <mat-checkbox name="semiAdmin" [(ngModel)]="participants.semiAdmin"
+                      >Can Add Other Participants</mat-checkbox
+                    >
+                  </div>
+
+                  <button  [disabled]="f.invalid" button mat-raised-button color="primary">Add to List</button>
+                </form>
+          </div>
+         <div class = "col-sm-8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="no.">
+                  <th mat-header-cell *matHeaderCellDef>No.</th>
+                  <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+                </ng-container>
+                <ng-container matColumnDef="semiAdmin">
+                  <th mat-header-cell *matHeaderCellDef>
+                    SemiAdmin
+                    <i
+                      matTooltip="Will have control over participants of this event."
+                      class="fa fa-question fa-lg"
+                      aria-hidden="true"
+                    ></i>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.semiAdmin === true"
+                      ><i class="material-icons" (click)="toggleSemiAdmin(element)">
+                        check_box
+                      </i></span
+                    ><span *ngIf="element.semiAdmin === false"
+                      ><i class="material-icons" (click)="toggleSemiAdmin(element)">
+                        check_box_outline_blank
+                      </i></span
+                    >
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-button (click)="deleteParticipant(element)">
+                      <i class="material-icons"> delete </i>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+              <button [disabled]="oneClick"   mat-button (click) = "addAllToEvent()"> ADD ALL TO {{(eventName | uppercase) || 'EVENT'}}</button>
+         </div>
+
+
+        </div>
+      </div>
+</div>
+

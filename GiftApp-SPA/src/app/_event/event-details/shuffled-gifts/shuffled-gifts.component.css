@@ -1,0 +1,44 @@
+#header {
+  text-align: center;
+}
+#content {
+  background: #fff;
+  border-radius: 2px;
+  height: 100%;
+  margin: 1rem;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+#contentHeader {
+}
+
+.listItem {
+  padding-top: 18px;
+  padding-bottom: 9px;
+  background: #fff;
+  border-radius: 2px;
+  height: 100%;
+  margin: 1rem;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+}
+
+.listItem:hover {
+  background-color: #e9f3ff;
+}
+
+ul {
+  list-style-type: none;
+  padding:0;
+}
+
+.description{
+  text-align: center;
+}
+
+.giftUrl{
+  word-wrap: break-word;
+}

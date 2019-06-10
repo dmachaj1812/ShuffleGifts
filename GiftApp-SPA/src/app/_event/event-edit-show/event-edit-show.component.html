@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <form #f="ngForm" (ngSubmit)="editEvent(f)">
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <input matInput placeholder="Event Name" name="eventName" [(ngModel)]="currentEvent.eventName" required
+            name="eventName" #eventName="ngModel" />
+          <mat-error *ngIf="eventName?.errors?.required">Event Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <input matInput placeholder="Event Place" [(ngModel)]="currentEvent.eventPlace" name="eventPlace"
+            #eventPlace="ngModel" required />
+          <mat-error *ngIf="eventPlace?.errors?.required">Evemt Place is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" hideRequiredMarker>
+          <input matInput placeholder="Address" name="mailingAddress" [(ngModel)]="currentEvent.mailingAddress"
+            #maillingAddress="ngModel" required />
+          <mat-error *ngIf="maillingAddress?.errors?.required">Address is required</mat-error>
+        </mat-form-field>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput placeholder="City" name="city" [(ngModel)]="currentEvent.city" #city="ngModel" required />
+              <mat-error *ngIf="city?.errors?.required">City is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput placeholder="State" name="state" [(ngModel)]="currentEvent.state" #state="ngModel"
+                required />
+              <mat-error *ngIf="state?.errors?.required">State is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput type="number" placeholder="Zip Code" name="zipCode" [(ngModel)]="currentEvent.zipCode"
+                #zipCode="ngModel" required />
+              <mat-error *ngIf="zipCode?.errors?.required">Zip Code is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput [min]="minDate" [matDatepicker]="eventDatee" placeholder="Event Date" name="eventDatee"
+                [(ngModel)]="currentEvent.dateTimeOfEvent" #eventDatee="ngModel" required />
+              <mat-datepicker-toggle matSuffix [for]="eventDatee"></mat-datepicker-toggle>
+              <mat-datepicker #eventDatee></mat-datepicker>
+              <mat-error *ngIf="eventDatee?.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput type="time" placeholder="Event Time" name="eventTimee" [(ngModel)]="timeOfEvent"
+                #eventTimee="ngModel" required />
+              <mat-error *ngIf="eventTimee?.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Add gifts by" name="addGiftsBy"
+                [(ngModel)]="currentEvent.giftsAddBy" #addGiftsBy="ngModel" required [disabled]="giftsShuffled" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="addGiftsBy?.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <input matInput [min]="minDate" [matDatepicker]="pickerFor" placeholder="RSVP" name="RSVP"
+                [(ngModel)]="currentEvent.rsvp" #RSVP="ngModel" required [disabled]="!canChangeRSVP" />
+              <mat-datepicker-toggle matSuffix [for]="pickerFor"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFor></mat-datepicker>
+              <mat-error *ngIf="RSVP?.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <span matPrefix>$ &nbsp;</span>
+              <input type="number" min="0" matInput placeholder="Min Price" value="0"
+                [(ngModel)]="currentEvent.minPrice" name="minPrice" #minPrice="ngModel" required
+                [disabled]="giftsShuffled" />
+              <mat-error *ngIf="minPrice?.errors?.required">Min Price is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <span matPrefix>$ &nbsp;</span>
+              <input type="number" min="{{ currentEvent.minPrice }}" matInput placeholder="Max Price" value="1"
+                [(ngModel)]="currentEvent.maxPrice" name="maxPrice" #maxPrice="ngModel" required
+                [disabled]="giftsShuffled" />
+              <mat-error *ngIf="maxPrice?.errors?.required">Max Price is required</mat-error>
+              <mat-error *ngIf="maxPrice?.errors?.min">Price cannot be less than Min Price</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row" *ngIf="currentEvent.eventType === 'Christmas'">
+          <div class="col-sm-6" *ngFor="let eventOption of allEventOptions;let k = index">
+            <mat-form-field class="full-width" hideRequiredMarker>
+              <mat-label>{{eventOption[0].category}}</mat-label>
+              <mat-select [(ngModel)]="currentEvent.eventOptions[k]"
+                (ngModelChange)="changeDescription(currentEvent.eventOptions[k]-1,k)" name="{{eventOption[0].category}}"
+                [disabled]="giftsShuffled">
+                <mat-option *ngFor="let option of eventOption" value="{{option.id}}">{{option.name}}</mat-option>
+              </mat-select>
+              <mat-hint>{{eventOptionsToAddDescription[k]}}</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <button [disabled]="!f.dirty" class="full-width" mat-raised-button color="primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<app-view-participants *ngIf="eventLoaded" [eventShowPartData]="eventShowPartData"></app-view-participants>
