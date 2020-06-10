@@ -1,5 +1,5 @@
 import { AlertifyService } from './../_services/alertify.service';
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 import { UserService } from "./../_services/user.service";
 import { Component, OnInit, OnDestroy, Input, Directive } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';

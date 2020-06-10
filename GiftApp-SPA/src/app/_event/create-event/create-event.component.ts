@@ -6,7 +6,7 @@ import { GetSeededDataService } from '../../_services/get-seeded-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DateService } from '../../_services/date.service';
 import { EventService } from '../../_services/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 

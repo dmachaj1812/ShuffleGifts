@@ -1,9 +1,9 @@
 import { DateService } from 'src/app/_services/date.service';
-import { MatTable } from '@angular/material';
+import { MatTable } from '@angular/material/table';
 import { AuthService } from '../../_services/auth.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { EventService } from 'src/app/_services/event.service';
 import { tokenGetter } from 'src/app/app.module';
 

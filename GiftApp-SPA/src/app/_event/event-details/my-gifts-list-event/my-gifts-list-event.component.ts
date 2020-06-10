@@ -1,7 +1,7 @@
 import { GiftService } from './../../../_services/gift.service';
 import { EventGiftData } from './../../../_models/eventGiftData';
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import { ShowGiftType } from 'src/app/_gift/show-gifts/show-gift-type';
 import { DateService } from 'src/app/_services/date.service';

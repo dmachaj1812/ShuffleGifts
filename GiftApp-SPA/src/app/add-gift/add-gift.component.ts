@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertifyService } from './../_services/alertify.service';
 import { GiftService } from './../_services/gift.service';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { Location } from '@angular/common';
 
 

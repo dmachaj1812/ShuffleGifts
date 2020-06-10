@@ -1,7 +1,7 @@
 import { AlertifyService } from './../_services/alertify.service';
 import { GiftService } from './../_services/gift.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Gift } from '../_models/gift';
 
 @Component({

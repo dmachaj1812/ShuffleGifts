@@ -4,7 +4,7 @@ import { AlertifyService } from './../_services/alertify.service';
 import { Router } from '@angular/router';
 import { UserService } from './../_services/user.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../_services/auth.service';
 import { Role } from '../_models/role';
 import { EventService } from '../_services/event.service';
